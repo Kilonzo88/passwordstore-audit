@@ -28,4 +28,14 @@ And get an output of:
 
 myPassword
 
-**Recommended Mitigation:** 
+**Recommended Mitigation:** The current architecture is fundamentally insecure as it stores sensitive data in plaintext on a public ledger. A more robust approach involves off-chain encryption: the user encrypts their password locally and only stores the ciphertext on-chain. This ensures that even though the storage is public, the data remains unreadable without a private decryption key held only by the user.
+
+Furthermore, you should remove the getPassword() view function entirely. While view functions are intended for gasless "calls," there is a significant risk of user error. If a user—or a poorly configured frontend—accidentally submits a transaction to this function instead of a simple call, the following occurs:
+
+- Mempool Exposure: The request, potentially including parameters or the intent to decrypt, is broadcast to public nodes before it is even mined.
+
+- On-Chain Logging: The transaction is recorded in the blockchain's history. If the function returns the decrypted password as a result of a state-changing transaction, that value can be leaked in the transaction's execution trace.
+
+- Permanent Record: Once the decryption request is "sent" as a transaction, it exists forever in the block history, effectively "doxing" the secret you were trying to protect.
+
+By removing the function, you force the user to retrieve the encrypted data directly from storage and decrypt it locally on their own machine, ensuring the sensitive decryption process never touches the network.
