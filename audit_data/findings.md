@@ -88,3 +88,10 @@ The `PasswordStore::getPassword` function signature is `getPassword()` while the
 **Impact:** The natspec is incorrect
 
 **Recommended Mitigation:** Remove the incorrect natspec line
+
+'''diff
+    /*
+     * @notice This allows only the owner to retrieve the password.
+-     * @param newPassword The new password to set.
+     */
+'''
