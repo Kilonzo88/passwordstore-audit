@@ -4,7 +4,7 @@
 ​
 I show one such method of reading any data off chain below.
 
-**Impact:** 
+**Impact:** Anyone is able to read the private password, severely breaking the functionality of the protocol.
 
 **Proof of Concept:**
 
