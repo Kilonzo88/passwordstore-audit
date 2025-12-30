@@ -1,4 +1,4 @@
-### [S-#] Storing the password on-chain makes it visible to anyone and no longer private
+### [H-1] Storing the password on-chain makes it visible to anyone and no longer private
 
 **Description:**  All data stored on chain is public and visible to anyone. The `PasswordStore::s_password` variable is intended to be hidden and only accessible by the owner through the `PasswordStore::getPassword` function.
 ​
@@ -41,7 +41,7 @@ Furthermore, you should remove the getPassword() view function entirely. While v
 By removing the function, you force the user to retrieve the encrypted data directly from storage and decrypt it locally on their own machine, ensuring the sensitive decryption process never touches the network.
 
 
-### [S-#] PasswordStore::setPassword` has no access controls, meaning a non-owner could change the password
+### [H-2] PasswordStore::setPassword` has no access controls, meaning a non-owner could change the password
 
 **Description:** The PasswordStore::setPassword function defeats the purpose of the purpose of the smart contract because anyone not necessarily the owner can change the password. The function's natspec indicate that This function allows only the owner to set a new password.
 
@@ -73,7 +73,7 @@ function test_anyone_can_set_password(address randomAddress) public {
 **Recommended Mitigation:** Add an access control conditional to `PasswordStore::setPassword`.
 
 
-### [S-#] `PasswordStore::getPassword` natspec indicates a parameter that doesn't exist, causing the natspec to be incorrect.
+### [I-1] `PasswordStore::getPassword` natspec indicates a parameter that doesn't exist, causing the natspec to be incorrect.
 
 **Description:** '''
 /*
