@@ -19,7 +19,7 @@ header-includes:
     \vspace{1cm}
     {\Large Version 1.0\par}
     \vspace{2cm}
-    {\Large\itshape Cyfrin.io\par}
+    {\Large\itshape CryptAudit\par}
     \vfill
     {\large \today\par}
 \end{titlepage}
