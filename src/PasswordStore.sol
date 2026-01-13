@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity 0.8.18; // q is this the upto date compiler version
 
 /*
  * @author not-so-secure-dev
@@ -10,10 +10,18 @@ pragma solidity 0.8.18;
 contract PasswordStore {
     error PasswordStore__NotOwner();
 
+    /*//////////////////////////////////////////////////////////////
+                            STATE VARIABLES
+    //////////////////////////////////////////////////////////////*/
     address private s_owner;
+    //@audit- Medium: Storing passwords as plain text is insecure. Consider hashing the password before storing it.
     string private s_password;
 
-    event SetNewPassword();
+
+    /*//////////////////////////////////////////////////////////////
+                                 EVENTS
+    //////////////////////////////////////////////////////////////*/
+    event SetNetPassword();
 
     constructor() {
         s_owner = msg.sender;
@@ -23,13 +31,17 @@ contract PasswordStore {
      * @notice This function allows only the owner to set a new password.
      * @param newPassword The new password to set.
      */
+
+    //@audit- High: Any user can call this function to set the password, not just the owner.
+    //missing access control
     function setPassword(string memory newPassword) external {
         s_password = newPassword;
-        emit SetNewPassword();
+        emit SetNetPassword();
     }
 
     /*
      * @notice This allows only the owner to retrieve the password.
+     //@audit- There's no param for this function.
      * @param newPassword The new password to set.
      */
     function getPassword() external view returns (string memory) {
